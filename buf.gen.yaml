@@ -1,0 +1,14 @@
+version: v2
+inputs:
+  - path: ../A2A/specification/grpc
+managed:
+  enabled: true
+plugins:
+  # Generate Swift protobuf code
+  # Requires protoc-gen-swift to be installed and in PATH
+  # Install: brew install swift-protobuf or build from source
+  - local: protoc-gen-swift
+    out: Sources/A2A/Protobuf
+    opt:
+      - Visibility=Public
+

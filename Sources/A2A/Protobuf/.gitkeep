@@ -1,0 +1,3 @@
+# This directory contains generated Swift protobuf code
+# Run scripts/generate_protobuf.sh to generate the files from a2a.proto
+
