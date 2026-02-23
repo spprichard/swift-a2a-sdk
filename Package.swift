@@ -24,7 +24,9 @@ let package = Package(
         
         // HTTP server framework
         .package(url: "https://github.com/hummingbird-project/hummingbird.git", from: "2.0.0"),
-        
+        .package(url: "https://github.com/apple/swift-nio.git", from: "2.95.0"),
+
+
         // HTTP client
         .package(url: "https://github.com/swift-server/async-http-client.git", from: "1.30.0"),
         
