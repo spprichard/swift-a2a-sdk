@@ -50,6 +50,7 @@ let package = Package(
                 .product(name: "SSEKit", package: "SSEKit"),
                 .product(name: "JSONRPC", package: "JSONRPC"),
                 .product(name: "AnyCodable", package: "AnyCodable"),
+                .product(name: "NIOFoundationCompat", package: "swift-nio"),
             ]
         ),
         .testTarget(
@@ -63,6 +64,7 @@ let package = Package(
             dependencies: [
                 "A2A",
                 .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "NIOFoundationCompat", package: "swift-nio"),
             ]
         ),
     ]

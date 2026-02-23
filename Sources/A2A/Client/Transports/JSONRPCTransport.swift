@@ -1,6 +1,7 @@
+import SSEKit
 import Foundation
 import AsyncHTTPClient
-import SSEKit
+import NIOFoundationCompat
 
 /// Creates a JSONEncoder configured per A2A spec Section 5.6.1 (ISO 8601 timestamps)
 private func makeA2AEncoder() -> JSONEncoder {

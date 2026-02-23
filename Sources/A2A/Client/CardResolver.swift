@@ -1,5 +1,6 @@
 import Foundation
 import AsyncHTTPClient
+import NIOFoundationCompat
 
 /// AgentCardResolver discovers agent cards from well-known paths
 public actor AgentCardResolver {
