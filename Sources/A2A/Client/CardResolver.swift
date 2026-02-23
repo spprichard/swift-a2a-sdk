@@ -36,8 +36,8 @@ public actor AgentCardResolver {
         }
         
         // Convert ByteBuffer to Data
-        let data = body.getData(at: body.readerIndex, length: body.readableBytes) ?? Data()
-        
+        let data = Data(buffer: body)
+
         let decoder = JSONDecoder()
         do {
             let agentCard = try decoder.decode(AgentCard.self, from: data)

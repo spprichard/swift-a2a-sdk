@@ -80,8 +80,8 @@ public final class JSONRPCTransport: ClientTransport {
         }
         
         // Convert ByteBuffer to Data
-        let responseData = body.getData(at: body.readerIndex, length: body.readableBytes) ?? Data()
-        
+        let responseData = Data(buffer: body)
+
         guard let json = try? JSONSerialization.jsonObject(with: responseData) as? [String: Any] else {
             throw A2AClientJSONError("Failed to parse response")
         }
@@ -168,7 +168,7 @@ public final class JSONRPCTransport: ClientTransport {
                 }
                 
                 // Read SSE events - convert ByteBuffer to Data
-                let bodyData = body.getData(at: body.readerIndex, length: body.readableBytes) ?? Data()
+                let bodyData = Data(buffer: body)
                 let bodyString = String(data: bodyData, encoding: .utf8) ?? ""
                 
                 // Simple SSE parsing (for MVP)
@@ -231,8 +231,8 @@ public final class JSONRPCTransport: ClientTransport {
         }
         
         // Convert ByteBuffer to Data
-        let responseData = body.getData(at: body.readerIndex, length: body.readableBytes) ?? Data()
-        
+        let responseData = Data(buffer: body)
+
         guard let json = try? JSONSerialization.jsonObject(with: responseData) as? [String: Any] else {
             throw A2AClientJSONError("Failed to parse response")
         }
