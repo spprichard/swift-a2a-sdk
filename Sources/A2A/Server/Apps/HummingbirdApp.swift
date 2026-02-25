@@ -30,12 +30,14 @@ public struct A2AHummingbirdApplication {
     private let requestHandler: RequestHandler
     private let hostname: String
     private let port: Int
-    
+    private let healthCheck: HealthCheckConfiguration?
+
     public init(
         agentCard: AgentCard,
         requestHandler: RequestHandler,
         hostname: String = "127.0.0.1",
-        port: Int = 8080
+        port: Int = 8080,
+        healthCheck: HealthCheckConfiguration?
     ) {
         self.agentCard = agentCard
         self.requestHandler = requestHandler
@@ -45,18 +47,28 @@ public struct A2AHummingbirdApplication {
         )
         self.hostname = hostname
         self.port = port
+        self.healthCheck = healthCheck
     }
-    
+
     /// Build and configure the Hummingbird application
     /// - Returns: Configured Hummingbird application
     public func build() -> some ApplicationProtocol {
         let router = Router()
-        
+
+        if let healthCheck {
+            router.on(
+                healthCheck.endpoint,
+                method: healthCheck.method
+            ) { _, _ in
+                Response(status: .ok)
+            }
+        }
+
         // Capture references for closures
         let agentCard = self.agentCard
         let jsonrpcHandler = self.jsonrpcHandler
         let requestHandler = self.requestHandler
-        
+
         // Agent card endpoint
         router.get("/.well-known/agent.json") { request, context -> Response in
             let encoder = makeA2AEncoder()
@@ -244,6 +256,19 @@ public struct A2AHummingbirdApplication {
             router: router,
             configuration: .init(address: .hostname(hostname, port: port))
         )
+    }
+}
+
+public struct HealthCheckConfiguration {
+    let endpoint: RouterPath
+    let method: HTTPTypes.HTTPRequest.Method
+
+    public init(
+        endpoint: RouterPath = "/",
+        method: HTTPTypes.HTTPRequest.Method = .get
+    ) {
+        self.endpoint = endpoint
+        self.method = method
     }
 }
 
